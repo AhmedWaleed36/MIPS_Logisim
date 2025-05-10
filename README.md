@@ -203,7 +203,7 @@ Maps ALUOp and Funct to operations:
 
     🧑‍💻 Hazem Ahmed Abdelfattah
 
-    🧑‍💻 Saied Khaled Awad
+    🧑‍💻 Saeed Khalid Awaad
 
 ## 🎓 Supervision
 
