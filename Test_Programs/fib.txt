@@ -1,0 +1,62 @@
+Machine Code
+
+8c080000 00000000 00000000 00000000 1100000d 00000000 00000000 00000000
+20090001 00000000 00000000 00000000 1109000d 00000000 00000000 00000000
+00004820 00000000 00000000 00000000 200a0001 00000000 00000000 00000000
+20150002 00000000 00000000 00000000 0115602a 00000000 00000000 00000000
+15800005 00000000 00000000 00000000 01495820 00000000 00000000 00000000
+000a4820 00000000 00000000 00000000 000b5020 00000000 00000000 00000000
+22b50001 00000000 00000000 00000000 08000007 00000000 00000000 00000000
+08000013 00000000 00000000 00000000 00005020 00000000 00000000 00000000
+0800000e 00000000 00000000 00000000 200a0001 00000000 00000000 00000000
+0800000e 00000000 00000000 00000000 08000013 00000000 00000000 00000000
+
+Assembly
+
+.data
+    # No string data needed since we're not printing
+    n: .word 3  # Hardcoded input value (calculate Fib(10))
+
+.text
+.globl main
+
+main:
+    lw $t0, n               # Load hardcoded input value
+    
+    # Handle base cases
+    beq $t0, $zero, is_zero
+    addi $t1, $zero, 1       # $t1 = 1
+    beq $t0, $t1, is_one
+    
+    # Initialize fib values
+    add $t1, $zero, $zero    # Fib(0) = 0
+    addi $t2, $zero, 1       # Fib(1) = 1
+    addi $s5, $zero, 2       # Counter starts from 2
+
+fib_loop:
+    slt $t4, $t0, $s5        # Check if counter > input
+    bne $t4, $zero, end      # If true, exit loop
+    
+    add $t3, $t2, $t1        # Fib(n) = Fib(n-1) + Fib(n-2)
+    add $t1, $zero, $t2      # Shift previous values
+    add $t2, $zero, $t3
+    
+    addi $s5, $s5, 1         # Increment counter
+    j fib_loop
+
+end:
+    # Result is in $t2
+    # For demonstration, store result in memory
+    j exit
+
+is_zero:
+    add $t2, $zero, $zero    # Fib(0) = 0
+    j end
+
+is_one:
+    addi $t2, $zero, 1       # Fib(1) = 1
+    j end
+
+exit:
+    # Infinite loop to stop execution
+    j exit

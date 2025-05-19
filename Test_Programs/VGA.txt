@@ -1,0 +1,22 @@
+Machine Code
+
+2009ffff 00000000 00000000 00000000 11280003 00000000 00000000 00000000
+8d100000 00000000 00000000 00000000 21080001 00000000 00000000 00000000
+08000001 00000000 00000000 00000000 08000005
+
+Assembly
+
+.text
+	.globl main
+main:
+	addi $t1 , $zero , 65536
+	
+loop:
+	beq $t1 , $t0 , end
+	lw 	$s0 , 0($t0)
+	addi $t0 , $t0 , 1
+	j loop
+end:
+	j end
+
+Put the image HEX in the Data Memory

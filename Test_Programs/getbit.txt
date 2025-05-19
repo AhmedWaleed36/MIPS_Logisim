@@ -1,0 +1,35 @@
+Machine Code
+
+8c100000 00000000 00000000 00000000 8c110004 00000000 00000000 00000000
+20080001 00000000 00000000 00000000 02284004 00000000 00000000 00000000
+02084824 00000000 00000000 00000000 02299806 00000000 00000000 00000000
+ac130008 00000000 00000000 00000000 08000007 00000000 00000000 00000000
+
+Assembly
+
+.data
+    # Hardcoded values instead of prompts
+    number: .word 0x1234ABCD   # Example number (change this to test different values)
+    bitpos: .word 5            # Example bit position (0-31)
+    result: .word 0            # Will store the result here
+
+.text
+.globl main
+
+main:
+    # Load hardcoded values
+    lw $s0, number            # $s0 = number to check
+    lw $s1, bitpos             # $s1 = bit position to check
+    
+    # Compute if bit is set (same logic as original)
+    addi $t0, $zero, 1        # $t0 = 1 (instead of li)
+    sllv $t0, $t0, $s1         # Shift left by bit position
+    and $t1, $s0, $t0          # Mask the bit
+    srlv $s3, $t1, $s1         # Shift right to get 0 or 1
+    
+    # Store result in memory
+    sw $s3, result             # Store result at 'result' label
+    
+    # Infinite loop to terminate
+    loop_forever:
+        j loop_forever

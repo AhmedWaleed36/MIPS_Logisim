@@ -1912,6 +1912,7 @@
       <a name="width" val="32"/>
     </comp>
     <comp lib="3" loc="(1100,2850)" name="Shifter">
+      <a name="shift" val="ar"/>
       <a name="width" val="32"/>
     </comp>
     <comp loc="(1190,1020)" name="ALU1Bit"/>
